@@ -27,7 +27,8 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityDao cityDao;
 
-    @Autowired
+    @SuppressWarnings("rawtypes")
+	@Autowired
     private RedisTemplate redisTemplate;
 
     /**
@@ -35,7 +36,8 @@ public class CityServiceImpl implements CityService {
      * 如果缓存存在，从缓存中获取城市信息
      * 如果缓存不存在，从 DB 中获取城市信息，然后插入缓存
      */
-    public City findCityById(Long id) {
+    @SuppressWarnings("unchecked")
+	public City findCityById(Long id) {
         // 从缓存中获取城市信息
         String key = "city_" + id;
         ValueOperations<String, City> operations = redisTemplate.opsForValue();
@@ -69,7 +71,8 @@ public class CityServiceImpl implements CityService {
      * 如果缓存存在，删除
      * 如果缓存不存在，不操作
      */
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Long updateCity(City city) {
         Long ret = cityDao.updateCity(city);
 
@@ -85,7 +88,8 @@ public class CityServiceImpl implements CityService {
         return ret;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Long deleteCity(Long id) {
 
         Long ret = cityDao.deleteCity(id);
